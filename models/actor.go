@@ -1,8 +1,8 @@
 package models
 
 type Actor struct {
-	ID        int
-	FirstName string
-	LastName  string
-	ImageURL  *string // Optional field for actor's image URL
+	ID        int     `json:"id"`
+	FirstName string  `json:"first_name"`
+	LastName  string  `json:"last_name"`
+	ImageURL  *string `json:"image_url,omitempty"` // Optional field for actor's image URL
 }
