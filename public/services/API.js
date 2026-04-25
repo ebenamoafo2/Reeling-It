@@ -10,7 +10,7 @@ export const API = {
     return await API.fetch(`movies/${id}`);
   },
   searchMovies: async (q, order, genre) => {
-    return await API.fetch(`/movies/search`, { q, order, genre });
+    return await API.fetch(`movies/search`, { q, order, genre });
   },
   getGenres: async () => {
     return await API.fetch("genres");

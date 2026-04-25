@@ -1,0 +1,2 @@
+ERROR: 2026/04/25 18:51:07 logger.go:35: Failed to search movies by name: pq: unnamed prepared statement does not exist (26000)
+ERROR: 2026/04/25 18:51:07 logger.go:35: Failed to get movies: pq: unnamed prepared statement does not exist (26000)

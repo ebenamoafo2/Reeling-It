@@ -4,7 +4,7 @@ import "./components/AnimatedLoading.js";
 import MovieDetailsPage from "./components/MovieDetailsPage.js";
 import "./components/YouTubeEmbed.js";
 import Router from "./services/Router.js";
-import { MoviePage } from "./components/MoviePage.js";
+import { MoviesPage } from "./components/MoviesPage.js";
 
 window.addEventListener("DOMContentLoaded", event => {
   app.Router.init();
@@ -12,11 +12,6 @@ window.addEventListener("DOMContentLoaded", event => {
 
 window.app = {
   Router,
-  search: event => {
-    event.preventDefault();
-    const query = document.querySelector("input[type='search']").value;
-    //TODO
-  },
   showError: (
     message = "There was an error loading the page",
     goToHome = true,
@@ -29,6 +24,24 @@ window.app = {
   closeError: () => {
     document.getElementById("alert-modal").close();
   },
-
+  search: event => {
+    event.preventDefault();
+    const keywords = document.querySelector("input[type=search]").value;
+    if (keywords.length > 1) {
+      app.Router.go(`/movies?q=${keywords}`);
+    }
+  },
+  searchOrderChange: order => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const q = urlParams.get("q");
+    const genre = urlParams.get("genre") ?? "";
+    app.Router.go(`/movies?q=${q}&order=${order}&genre=${genre}`);
+  },
+  searchFilterChange: genre => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const q = urlParams.get("q");
+    const order = urlParams.get("order") ?? "";
+    app.Router.go(`/movies?q=${q}&order=${order}&genre=${genre}`);
+  },
   api: API,
 };
