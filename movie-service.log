@@ -1,2 +1,7 @@
 ERROR: 2026/04/25 18:51:07 logger.go:35: Failed to search movies by name: pq: unnamed prepared statement does not exist (26000)
 ERROR: 2026/04/25 18:51:07 logger.go:35: Failed to get movies: pq: unnamed prepared statement does not exist (26000)
+ERROR: 2026/04/25 19:14:23 logger.go:35: Failed to search movies by name: pq: unnamed prepared statement does not exist (26000)
+ERROR: 2026/04/25 19:14:23 logger.go:35: Failed to get movies: pq: unnamed prepared statement does not exist (26000)
+ERROR: 2026/04/25 21:35:55 logger.go:35: Failed to decode registration request: EOF
+ERROR: 2026/04/25 21:35:58 logger.go:35: Failed to decode registration request: EOF
+ERROR: 2026/04/25 21:39:08 logger.go:35: Password mismatch for email: test@gmail.com: <nil>
