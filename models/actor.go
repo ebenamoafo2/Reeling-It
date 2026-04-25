@@ -4,5 +4,5 @@ type Actor struct {
 	ID        int     `json:"id"`
 	FirstName string  `json:"first_name"`
 	LastName  string  `json:"last_name"`
-	ImageURL  *string `json:"image_url,omitempty"` // Optional field for actor's image URL
+	ImageURL  *string `json:"image_url,omitempty"` 
 }

@@ -18,13 +18,13 @@ func initializeLogger() *logger.Logger {
 	if err != nil {
 		log.Fatalf("Failed to initialize logger: %v", err)
 	}
-	defer logInstance.Close()
 	return logInstance
 }
 
 func main() {
 	// Initialize the logger
 	logInstance := initializeLogger()
+	defer logInstance.Close()
 
 	//Environment variables
 	if err := godotenv.Load(); err != nil {
@@ -55,7 +55,15 @@ func main() {
 	http.HandleFunc("/api/movies/random", movieHandler.GetRandomMovies)
 	http.HandleFunc("/api/movies/search", movieHandler.SearchMovies)
 	http.HandleFunc("/api/movies/", movieHandler.GetMovie) // This will handle requests like /api/movies/{id}
-	http.HandleFunc("/api/genre/", movieHandler.GetGenres)
+	http.HandleFunc("/api/genres/", movieHandler.GetGenres)
+
+	/// Handler catch-all 
+	catchAllHandler := func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/index.html")
+	}
+	http.HandleFunc("/movies", catchAllHandler)
+	http.HandleFunc("/movies/", catchAllHandler)
+	http.HandleFunc("/account/", catchAllHandler)
 
 	//handle for static files
 	http.Handle("/", http.FileServer(http.Dir("public")))
@@ -64,7 +72,7 @@ func main() {
 
 	err = http.ListenAndServe(addr, nil)
 	if err != nil {
-		log.Fatalf("Failed to start server: %v", err)    // Log the error to the console
 		logInstance.Error("Failed to start server", err) // Log the error to the file
+		log.Fatalf("Failed to start server: %v", err)    // Log the error to the console
 	}
 }

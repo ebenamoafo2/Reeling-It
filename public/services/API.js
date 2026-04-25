@@ -1,14 +1,13 @@
 export const API = {
-  baseURL: "/api",
-
+  baseURL: "/api/",
   getTopMovies: async () => {
-    return await API.fetch("/movies/top");
+    return await API.fetch("movies/top");
   },
   getRandomMovies: async () => {
     return await API.fetch("movies/random");
   },
   getMovieById: async id => {
-    return await API.fetch(`/movies/${id}`);
+    return await API.fetch(`movies/${id}`);
   },
   searchMovies: async (q, order, genre) => {
     return await API.fetch(`/movies/search`, { q, order, genre });
@@ -16,16 +15,20 @@ export const API = {
   getGenres: async () => {
     return await API.fetch("genres");
   },
-  fetch: async (ServiceName, args) => {
+  fetch: async (service, args) => {
     try {
-      const queryString = args ? new URLSearchParams(args).toString : "";
-      const response = await fetch(
-        API.baseURL + ServiceName + "?" + queryString,
-      );
+      const queryString = args ? new URLSearchParams(args).toString() : "";
+      const response = await fetch(API.baseURL + service + "?" + queryString);
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
       const result = await response.json();
       return result;
     } catch (e) {
       console.error(e);
+      throw e;
     }
   },
 };
+
+export default API;
