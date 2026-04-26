@@ -1,7 +1,7 @@
 const Store = {
   jwt: null,
   get loggedIn() {
-    return this.jwt !== null;
+    return Store.jwt !== null;
   },
 };
 

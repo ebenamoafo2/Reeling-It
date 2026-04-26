@@ -11,3 +11,4 @@ ERROR: 2026/04/25 23:05:49 logger.go:35: Registration validation failed: missing
 ERROR: 2026/04/25 23:06:00 logger.go:35: Registration validation failed: missing required fields: <nil>
 ERROR: 2026/04/25 23:06:39 logger.go:35: Registration validation failed: missing required fields: <nil>
 ERROR: 2026/04/25 23:40:53 logger.go:35: Failed to decode authentication request: json: cannot unmarshal number into Go struct field AuthRequest.password of type string
+ERROR: 2026/04/26 08:30:42 logger.go:35: Failed to encode response: write tcp [::1]:8080->[::1]:60171: wsasend: An established connection was aborted by the software in your host machine.

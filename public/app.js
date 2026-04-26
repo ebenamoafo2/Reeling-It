@@ -62,7 +62,6 @@ window.app = {
     if (errors.length == 0) {
       const response = await API.register(name, email, password);
       if (response.success) {
-        app.Store.jwt = response.jwt;
         app.Router.go("/account/");
       } else {
         app.showError(response.message, false);
@@ -95,6 +94,27 @@ window.app = {
     Store.jwt = null;
     app.Router.go("/");
   },
-
+  saveToCollection: async (movie_id, collection) => {
+    if (app.Store.loggedIn) {
+      try {
+        const response = await API.saveToCollection(movie_id, collection);
+        if (response.success) {
+          switch (collection) {
+            case "favorite":
+              app.Router.go("/account/favorites");
+              break;
+            case "watchlist":
+              app.Router.go("/account/watchlist");
+          }
+        } else {
+          app.showError("We couldn't save the movie.");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      app.Router.go("/account/");
+    }
+  },
   api: API,
 };

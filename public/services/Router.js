@@ -20,14 +20,16 @@ const Router = {
       history.pushState(null, "", route);
     }
 
+    let pageElement = null;
+    const routePath = route.includes("?") ? route.split("?")[0] : route;
+
     let needsLogin = false;
 
-    const routePath = route.includes("?") ? route.split("?")[0] : route;
-    let pageElement = null;
     for (const r of routes) {
       if (typeof r.path === "string" && r.path === routePath) {
         //string path
         pageElement = new r.component();
+        needsLogin = r.loggedIn === true;
         break;
       } else if (r.path instanceof RegExp) {
         //RegEx path
@@ -36,10 +38,10 @@ const Router = {
           const params = match.slice(1);
           pageElement = new r.component();
           pageElement.params = params;
+          needsLogin = r.loggedIn === true;
           break;
         }
       }
-      needsLogin = r.loggedIn === true;
     }
 
     if (pageElement) {
