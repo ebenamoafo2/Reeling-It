@@ -5,6 +5,7 @@ import MovieDetailsPage from "./components/MovieDetailsPage.js";
 import "./components/YouTubeEmbed.js";
 import Router from "./services/Router.js";
 import { MoviesPage } from "./components/MoviesPage.js";
+import Store from "./services/Store.js";
 
 window.addEventListener("DOMContentLoaded", event => {
   app.Router.init();
@@ -12,6 +13,7 @@ window.addEventListener("DOMContentLoaded", event => {
 
 window.app = {
   Router,
+  Store,
   showError: (
     message = "There was an error loading the page",
     goToHome = true,
@@ -60,6 +62,7 @@ window.app = {
     if (errors.length == 0) {
       const response = await API.register(name, email, password);
       if (response.success) {
+        app.Store.jwt = response.jwt;
         app.Router.go("/account/");
       } else {
         app.showError(response.message, false);
@@ -79,6 +82,7 @@ window.app = {
     if (errors.length == 0) {
       const response = await API.authenticate(email, password);
       if (response.success) {
+        app.Store.jwt = response.jwt;
         app.Router.go("/account/");
       } else {
         app.showError(response.message, false);
@@ -86,6 +90,10 @@ window.app = {
     } else {
       app.showError(errors.join(". "), false);
     }
+  },
+  logout: () => {
+    Store.jwt = null;
+    app.Router.go("/");
   },
 
   api: API,

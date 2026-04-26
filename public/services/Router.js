@@ -20,6 +20,8 @@ const Router = {
       history.pushState(null, "", route);
     }
 
+    let needsLogin = false;
+
     const routePath = route.includes("?") ? route.split("?")[0] : route;
     let pageElement = null;
     for (const r of routes) {
@@ -36,6 +38,15 @@ const Router = {
           pageElement.params = params;
           break;
         }
+      }
+      needsLogin = r.loggedIn === true;
+    }
+
+    if (pageElement) {
+      // A page was found, we checked if we have access to it.
+      if (needsLogin && app.Store.loggedIn == false) {
+        app.Router.go("/account/login");
+        return;
       }
     }
     if (pageElement == null) {
